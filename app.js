@@ -97,13 +97,14 @@ function cellFeedback(planLimit, day, usage) {
   let perLength = 30;
   let currentAvg = usage / day;
   let projectedAvg = planLimit / perLength;
-  let remainingData = planLimit - usage;
   let remainingDays = perLength - day;
   let statusMsg;
-  let avgUsagePerfect = planLimit / totalDays;
+  let avgUsagePerfect = planLimit / day;
+  let extramessage = "";
 
-  console.log(`${day} day(s) used, ${perLength - day} day(s) remaining`);
-  console.log(`Average daily use: ${usage / day} GB/day`);  
+
+  //console.log(`${day} day(s) used, ${perLength - day} day(s) remaining`);
+  //console.log(`Average daily use: ${usage / day} GB/day`);  
 
 if (currentAvg > projectedAvg) {
   statusMsg = "Exceeding";
@@ -113,18 +114,21 @@ if (currentAvg > projectedAvg) {
   statusMsg = "AT"
 }
 
-let extramessage = "";
 
 if (currentAvg > avgUsagePerfect) {
   extramessage =`You are ${statusMsg} your average daily use ${currentAvg} GB/day, continuing this usage, you'll end up using ${planLimit - remainingDays * currentAvg} GB`;
 } else if (currentAvg  < avgUsagePerfect) {
-  extramessage = `You are ${statusMsg} your average daily use ${currentAvg} GB/day, continuing this usage, you'll end up using ${planLimit - remainingDays * currentAvg} GB`;
+   extramessage = `You are ${statusMsg} your average daily use ${currentAvg} GB/day, continuing this usage, you'll end up using ${planLimit - remainingDays * currentAvg} GB`;
 } else {
-  extramessage = `You are a PERFECT person in every way. (${avgUsagePerfect})`;
+   extramessage = `You are a PERFECT person in every way. (${avgUsagePerfect})`;
+}
+return `${day} day(s) used, ${30 - day} day(s) remaining 
+Average daily use: ${usage / day} GB/day
+${extramessage}`;
+
 }
 
+  console.log(cellFeedback(100, 20, 28)); 
+ 
 
-  cellFeedback(100, 20, 28); 
 
-
-   
